@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Timeline Explorer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: #007bff;
+        }
+
+        .event-item {
+            position: relative;
+            margin-left: 50px;
+            margin-bottom: 30px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .event-marker {
+            position: absolute;
+            left: -33px;
+            top: 15px;
+            width: 24px;
+            height: 24px;
+            background: #007bff;
+            border-radius: 50%;
+        }
+
+        .event-content {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .article-card {
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 3px solid #007bff;
+            background-color: #f8f9fa;
+        }
+
+        input,
+        button {
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>News Timeline Explorer</h1>
+    <input type="text" id="headlineInput" placeholder="Enter news headline">
+    <button onclick="processHeadline()">Generate Timeline</button>
+    <div class="timeline">
+        <div class="timeline-line"></div>
+        <div id="timelineContainer"></div>
+    </div>
+
+    <script>
+        async function processHeadline() {
+            let response;
+            try {
+                response = await fetch('/process_headline', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ headline: headlineInput.value })
+                });
+            } catch (networkErr) {
+                console.error('Network error:', networkErr);
+                alert('Network error – please try again.');
+                return;
+            }
+
+            let data;
+            try {
+                data = await response.json();
+            } catch (parseErr) {
+                console.error('Invalid JSON:', parseErr);
+                alert('Server returned invalid JSON.');
+                return;
+            }
+
+            displayTimeline(data);
+        }
+
+
+        function displayTimeline(data) {
+            const container = document.getElementById('timelineContainer');
+            container.innerHTML = '';
+            if (data && data.error) {
+                console.error('Server error:', data.error);
+                alert(`Error: ${data.error}`);
+                return;
+            }
+
+            // Ensure it's an array
+            if (!Array.isArray(data)) {
+                console.error('Expected array but got:', data);
+                alert('Unexpected response format – see console for details.');
+                return;
+            }
+            data.forEach((item, index) => {
+                const eventHTML = `
+                    <div class="event-item">
+                        <div class="event-marker"></div>
+                        <button onclick="toggleEvent(${index})">${item.event}</button>
+                        <div id="eventContent${index}" class="event-content">
+                            ${item.articles.length ? item.articles.map(article => `
+                                <div class="article-card">
+                                    <h3>${article.title}</h3>
+                                    <p>${article.snippet || 'No description available'}</p>
+                                    <a href="${article.link}" target="_blank">Read more</a>
+                                </div>
+                            `).join('') : '<p>No articles found</p>'}
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += eventHTML;
+            });
+        }
+
+        function toggleEvent(index) {
+            const content = document.getElementById(`eventContent${index}`);
+            content.style.display = content.style.display === 'block' ? 'none' : 'block';
+        }
+    </script>
+</body>
+
+</html>
