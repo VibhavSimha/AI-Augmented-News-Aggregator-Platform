@@ -11,7 +11,7 @@ CORS(app)
 
 
 # Initialize Groq API client
-client = Groq(api_key="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")
+client = Groq(api_key="<-- GROQ API 2--->")
 nltk.download('stopwords')
 
 def extract_keywords(text):
@@ -25,7 +25,7 @@ def search_google_news(query):
     params = {
         "q": query,
         "tbm": "nws",
-        "api_key": "1d11049f87ffd8baa1b1dae3491fc5035cab436281453426b3adef58088af61c"
+        "api_key": "<--SERP API-->"
     }
     url = "https://serpapi.com/search"
     response = requests.get(url, params=params)

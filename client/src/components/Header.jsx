@@ -31,7 +31,7 @@ function Header() {
     <header className="">
      <nav class="fixed top-0 left-0 w-full h-auto bg-gray-800 z-10 flex items-center justify-around">
       
-      <h3 class="relative heading font-bold md:basis-1/6 text-2xl xs:basis-4/12 z-50 mb-5 mt-5">News_Aggregator</h3>
+      <h3 class="relative heading font-bold md:basis-1/6 text-2xl xs:basis-4/12 z-50 mb-5 mt-5">News Aggregator</h3>
 
         <ul className={active ? "nav-ul flex gap-11 md:gap-14 xs:gap-12 lg:basis-3/6 md:basis-4/6 md:justify-end active" : " nav-ul flex gap-14 lg:basis-3/6 md:basis-4/6 justify-end"}>
           <li><Link className="no-underline font-semibold" to="/" onClick={() => { setActive(!active) }}>All News</Link></li>
@@ -53,7 +53,7 @@ function Header() {
               })}
             </ul>
           </li>
-          <li className="dropdown-li"><Link className="no-underline font-semibold flex items-center gap-2" onClick={() => { setShowCountryDropdown(!showCountryDropdown); setShowCategoryDropdown(false) }}>Country <FontAwesomeIcon className={showCountryDropdown ? "down-arrow-icon down-arrow-icon-active" : "down-arrow-icon"} icon={faCircleArrowDown} /></Link>
+          {/* <li className="dropdown-li"><Link className="no-underline font-semibold flex items-center gap-2" onClick={() => { setShowCountryDropdown(!showCountryDropdown); setShowCategoryDropdown(false) }}>Country <FontAwesomeIcon className={showCountryDropdown ? "down-arrow-icon down-arrow-icon-active" : "down-arrow-icon"} icon={faCircleArrowDown} /></Link>
             <ul className={showCountryDropdown ? "dropdown p-2 show-dropdown" : "dropdown p-2"}>
               {countries.map((element, index) => {
                 return (
@@ -84,7 +84,7 @@ function Header() {
           </label>
           
 
-          </Link></li>
+          </Link></li> */}
         </ul>
         <div className={active ? "ham-burger z-index-100 ham-open" : "ham-burger z-index-100"} onClick={() => { setActive(!active) }}>
           <span className="lines line-1"></span>

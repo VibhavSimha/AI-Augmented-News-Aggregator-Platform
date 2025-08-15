@@ -83,7 +83,7 @@ function Card(props) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer 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`,
+          'Authorization': `Bearer <---------GROQ API 1------>`,
         },
         body: JSON.stringify({
           messages: [
