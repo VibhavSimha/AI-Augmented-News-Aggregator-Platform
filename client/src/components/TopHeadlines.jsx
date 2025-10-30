@@ -25,7 +25,8 @@ function TopHeadlines() {
     setIsLoading(true);
     setError(null);
     const categoryParam = params.category ? `&category=${params.category}` : "";
-    fetch(`https://news-aggregator-dusky.vercel.app/top-headlines?language=en${categoryParam}&page=${page}&pageSize=${pageSize}`)
+  // Use dev proxy: /api/news -> local Node server
+  fetch(`/api/news/top-headlines?language=en${categoryParam}&page=${page}&pageSize=${pageSize}`)
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -52,7 +53,7 @@ function TopHeadlines() {
   return (
     <>
       {error && <div className="text-red-500 mb-4">{error}</div>}
-      <div className='my-10 cards grid lg:place-content-center md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 xs:grid-cols-1 xs:gap-4 md:gap-10 lg:gap-14 md:px-16 xs:p-3 '>
+      <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-24 space-y-4'>
         {!isLoading ? (
           data.length > 0 ? (
             data.map((element, index) => (
@@ -65,6 +66,7 @@ function TopHeadlines() {
                 url={element.url}
                 author={element.author}
                 source={element.source.name}
+                variant="list"
               />
             ))
           ) : (

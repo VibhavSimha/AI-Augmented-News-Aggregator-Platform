@@ -6,7 +6,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    color: var(--txt);
 }
 
 html, body {
@@ -15,27 +14,29 @@ html, body {
 }
 
 .light-theme {
-    --background: url("https://tailwindcss.com/_next/static/media/hero@75.b2469a49.jpg");
+    /* Subtle, professional newsroom background with a touch of warmth */
+    --background: linear-gradient(180deg, #fafafa 0%, #ffffff 40%, #fff8f8 100%);
     --primary: #F8FAFC;
     --secondary: #0F172A;
     --txt: #000;
-    --heading: #2dd9fe;
+    --heading: #4f46e5;
     --btn-color: #fff;
-    --btn-background: #5f99be;
-    --search-background: #000;
-    --c: #2dd9fe;
+    --btn-background: #6366f1;
+    --search-background: #fff;
+    --c: #6366f1;
     --hover_bg_change: backdrop-filter:6px;
 }
 
 .dark-theme {
-    --background: url("https://tailwindcss.com/_next/static/media/hero-dark@90.dba36cdf.jpg");
+    /* Subtle dark gradient */
+    --background: linear-gradient(135deg, #0f172a 0%, #111827 45%, #0b1220 100%);
     --primary: rgb(30,41,59);
     --secondary: #D5DDF0;
     --txt: #fff;
-    --heading: #4666FF;
+    --heading: #60a5fa;
     --btn-color: #000;
-    --btn-background: #5f99be;
-    --search-background: #18181b;
+    --btn-background: #60a5fa;
+    --search-background: #0b1220;
 }
 
 body {
@@ -51,9 +52,9 @@ body {
 }
 
 nav {
-    height: 70px;
-    backdrop-filter: blur(4px);
-    border-bottom: 0.1px solid grey;
+    height: auto; /* use component-defined height */
+    backdrop-filter: none;
+    border-bottom: none;
 }
 
 .heading {
@@ -275,6 +276,7 @@ footer {
     color: var(--heading);
     background: radial-gradient(farthest-side, currentColor calc(100% - 6px), #0000 calc(100% - 5px) 0);
     -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 13px), #000 calc(100% - 12px));
+    mask: radial-gradient(farthest-side, #0000 calc(100% - 13px), #000 calc(100% - 12px));
     border-radius: 50%;
     animation: l19 2s infinite linear;
 }

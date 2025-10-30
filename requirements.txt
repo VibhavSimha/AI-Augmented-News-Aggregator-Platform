@@ -1,0 +1,8 @@
+# Requirements for running app.py
+# If `pip install groq` fails, the Groq client package name or version may differ; tell me and I'll adjust.
+Flask>=2.2,<3.0
+Flask-Cors>=3.0.10
+requests>=2.31.0
+nltk>=3.8.1
+groq>=0.9.0
+python-dotenv>=1.0.1

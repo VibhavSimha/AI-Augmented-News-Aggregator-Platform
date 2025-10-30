@@ -22,7 +22,8 @@ function AllNews() {
   useEffect(() => {
     setIsLoading(true);
     setError(null);
-    fetch(`https://news-aggregator-dusky.vercel.app/all-news?page=${page}&pageSize=${pageSize}`)
+  // Use dev proxy: /api/news -> local Node server (localhost:3000)
+  fetch(`/api/news/all-news?page=${page}&pageSize=${pageSize}`)
       .then(response => {
         if (response.ok) {
           return response.json();
@@ -50,7 +51,7 @@ function AllNews() {
     <>
       {error && <div className="text-red-500 mb-4">{error}</div>}
 
-      <div className='my-10 cards grid lg:place-content-center md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 xs:grid-cols-1 xs:gap-4 md:gap-10 lg:gap-14 md:px-16 xs:p-3 '>
+      <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-24 space-y-4'>
         {!isLoading ? data.map((element, index) => (
           <EverythingCard
             title={element.title}
@@ -61,11 +62,12 @@ function AllNews() {
             author={element.author}
             source={element.source.name}
             key={index}
+            variant="list"
           />
         )) : <Loader />}
       </div>
       {!isLoading && data.length > 0 && (
-        <div className="pagination flex justify-center gap-14 my-10 items-center">
+        <div className="pagination flex justify-center gap-6 sm:gap-10 my-10 items-center">
           <button disabled={page <= 1} className='pagination-btn text-center' onClick={handlePrev}>&larr; Prev</button>
           <p className='font-semibold opacity-80'>{page} of {Math.ceil(totalResults / pageSize)}</p>
           <button className='pagination-btn text-center' disabled={page >= Math.ceil(totalResults / pageSize)} onClick={handleNext}>Next &rarr;</button>
