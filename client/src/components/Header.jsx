@@ -1,96 +1,62 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from 'react-router-dom'
-import countries from "./countries";
-import downArrow from './../assets/downarrow.png'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircleArrowDown } from '@fortawesome/free-solid-svg-icons'
-import axios from 'axios';
 
 
 
 
 function Header() {
   const [active, setActive] = useState(false);
-  const [showCountryDropdown, setShowCountryDropdown] = useState(false);
-  const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
+  const sections = [
+    { name: 'Home', to: '/' },
+    { name: 'World', to: '/top-headlines/general' },
+    { name: 'Business', to: '/top-headlines/business' },
+    { name: 'Tech', to: '/top-headlines/technology' },
+    { name: 'Science', to: '/top-headlines/science' },
+    { name: 'Health', to: '/top-headlines/health' },
+    { name: 'Entertainment', to: '/top-headlines/entertainment' },
+    { name: 'Sport', to: '/top-headlines/sports' },
+  ];
 
-  const [theme, setTheme] = useState("light-theme");
-  let category = ["business", "entertainment", "general", "health", "science", "sports", "technology","politics"]
-  useEffect(() => {
-    document.body.className = theme;
-  }, [theme])
-  function toggleTheme() {
-    if (theme === "light-theme") {
-      setTheme("dark-theme")
-    }
-    else {
-      setTheme("light-theme")
-    }
-  }
   return (
-    <header className="">
-     <nav class="fixed top-0 left-0 w-full h-auto bg-gray-800 z-10 flex items-center justify-around">
-      
-      <h3 class="relative heading font-bold md:basis-1/6 text-2xl xs:basis-4/12 z-50 mb-5 mt-5">News Aggregator</h3>
+    <header>
+      <nav className="fixed top-0 left-0 w-full z-20 border-b border-red-700 bg-red-600" style={{ backgroundColor: '#dc2626' }}>
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <span className="inline-flex items-center rounded-[2px] bg-white text-red-700 text-xs font-bold px-2 py-1 tracking-wider">NEWS</span>
+            <h1 className="text-white text-xl font-semibold tracking-tight">Pulse</h1>
+          </div>
 
-        <ul className={active ? "nav-ul flex gap-11 md:gap-14 xs:gap-12 lg:basis-3/6 md:basis-4/6 md:justify-end active" : " nav-ul flex gap-14 lg:basis-3/6 md:basis-4/6 justify-end"}>
-          <li><Link className="no-underline font-semibold" to="/" onClick={() => { setActive(!active) }}>All News</Link></li>
-          <li className="dropdown-li"><Link className="no-underline font-semibold flex items-center gap-2" onClick={() => { setShowCategoryDropdown(!showCategoryDropdown); setShowCountryDropdown(false) }}>Top-Headlines <FontAwesomeIcon className={showCategoryDropdown ? "down-arrow-icon down-arrow-icon-active" : "down-arrow-icon"} icon={faCircleArrowDown} /></Link>
+          <button
+            className="md:hidden inline-flex items-center justify-center text-white/90 hover:text-white"
+            onClick={() => setActive(v => !v)}
+            aria-label="Toggle navigation"
+          >
+            <span className="w-6 h-0.5 bg-white block mb-1" />
+            <span className="w-6 h-0.5 bg-white block mb-1" />
+            <span className="w-6 h-0.5 bg-white block" />
+          </button>
 
-            <ul className={showCategoryDropdown ? "dropdown p-2 show-dropdown" : "dropdown p-2"}>
-              {category.map((element, index) => {
-                return (
-                  <li key={index} onClick={() => { setShowCategoryDropdown(!showCategoryDropdown) }}>
-
-                    <Link to={"/top-headlines/" + element} className="flex gap-3 capitalize" type="btn"
-                      onClick={() => {
-                        setActive(!active)
-                      }}>
-                      {element}
-                    </Link>
-                  </li>
-                )
-              })}
-            </ul>
-          </li>
-          {/* <li className="dropdown-li"><Link className="no-underline font-semibold flex items-center gap-2" onClick={() => { setShowCountryDropdown(!showCountryDropdown); setShowCategoryDropdown(false) }}>Country <FontAwesomeIcon className={showCountryDropdown ? "down-arrow-icon down-arrow-icon-active" : "down-arrow-icon"} icon={faCircleArrowDown} /></Link>
-            <ul className={showCountryDropdown ? "dropdown p-2 show-dropdown" : "dropdown p-2"}>
-              {countries.map((element, index) => {
-                return (
-                  <li key={index} onClick={() => { setShowCountryDropdown(!showCountryDropdown) }}>
-                    <Link to={"/country/" + element?.iso_2_alpha} className="flex gap-3" type="btn"
-                      onClick={() => {
-                        setActive(!active)
-                      }}>
-                      <img
-                        src={element?.png}
-                        srcset={`https://flagcdn.com/32x24/${element?.iso_2_alpha}.png 2x`}
-                   
-                        alt={element?.countryName} />
-                      <span>{element?.countryName}</span>
-                    </Link>
-                  </li>
-                )
-              })}
-            </ul>
-          </li>
-          <li><Link className="no-underline font-semibold" to="#" onClick={() => { toggleTheme() }}>
-      
-          <input type="checkbox" class="checkbox" id="checkbox"/>
-             <label for="checkbox" class="checkbox-label">
-          <i class="fas fa-moon"></i>
-          <i class="fas fa-sun"></i>
-          <span class="ball"></span>
-          </label>
-          
-
-          </Link></li> */}
-        </ul>
-        <div className={active ? "ham-burger z-index-100 ham-open" : "ham-burger z-index-100"} onClick={() => { setActive(!active) }}>
-          <span className="lines line-1"></span>
-          <span className="lines line-2"></span>
-          <span className="lines line-3"></span>
+          <ul className={`hidden md:flex items-center gap-6 text-sm text-white`}> 
+            {sections.map((s) => (
+              <li key={s.name}>
+                <Link className="text-white hover:text-white border-b-2 border-transparent hover:border-white pb-1" to={s.to}>{s.name}</Link>
+              </li>
+            ))}
+          </ul>
         </div>
+
+        {/* mobile menu */}
+        {active && (
+          <div className="md:hidden border-t border-red-700 bg-red-600">
+            <ul className="px-4 py-3 space-y-2 text-white">
+              {sections.map((s) => (
+                <li key={s.name}>
+                  <Link className="block py-1.5 text-white border-b border-transparent hover:border-white" to={s.to} onClick={() => setActive(false)}>{s.name}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </nav>
     </header>
   );

@@ -1,0 +1,24 @@
+============================================================
+RAG Worker Starting...
+============================================================
+
+1. Loading embedding model: all-MiniLM-L6-v2
+   ✓ Loaded all-MiniLM-L6-v2 (22,713,216 parameters)
+
+2. Loading FAISS index: /Users/samvitgersappa/Desktop/Academic/college/EL/AI-Augmented-News-Aggregator-Platform/data/news.index
+   ✓ Loaded FAISS index (250,000 vectors)
+
+3. Loading metadata: /Users/samvitgersappa/Desktop/Academic/college/EL/AI-Augmented-News-Aggregator-Platform/data/news_meta.parquet
+   ✓ Loaded metadata (250,000 entries)
+
+============================================================
+✓ RAG Worker Ready
+============================================================
+
+Starting Flask server on http://127.0.0.1:5001
+Press CTRL+C to stop
+
+ * Serving Flask app 'rag_worker'
+ * Debug mode: off
+Address already in use
+Port 5001 is in use by another program. Either identify and stop that program, or start the server with a different port.
